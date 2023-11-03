@@ -10,4 +10,14 @@ export default defineConfig<'rspack'>({
       bundler: 'experimental-rspack',
     }),
   ],
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID, bundler }) => {
+      // add comments avoid sourcemap abnormal
+      if (bundler.BannerPlugin) {
+        chain
+          .plugin(CHAIN_ID.PLUGIN.BANNER)
+          .use(bundler.BannerPlugin, [{ banner: 'Micro front-end' }]);
+      }
+    },
+  },
 });
